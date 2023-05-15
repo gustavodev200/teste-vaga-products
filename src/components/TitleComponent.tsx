@@ -12,6 +12,7 @@ export const TitleComponent: React.FC<TitleComponentProps> = ({ title }) => {
         width: "100%",
         borderBottom: "1px solid #e0e0e0",
         paddingTop: "30px",
+        paddingBottom: "20px",
         marginBottom: "30px",
       }}
     >

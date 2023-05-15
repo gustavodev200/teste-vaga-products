@@ -1,16 +1,22 @@
+import { useState } from "react";
+
 import {
+  ButtonWrapper,
   InputComponent,
   ProductCard,
   SelectComponent,
   TitleComponent,
 } from "./components";
-import image_01 from "./assets/images/produto-01.jpeg";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import { api } from "./service/api";
+import { Typography } from "@mui/material";
 
 function App() {
+  const [products, setProducts] = useState(api.produtos);
+
   return (
     <>
       <CssBaseline />
@@ -23,57 +29,25 @@ function App() {
         >
           <Grid
             container
-            spacing={{ xs: 2, md: 3 }}
+            spacing={{ xs: 12, md: 8 }}
             columns={{ xs: 4, sm: 8, md: 12 }}
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
           >
-            <Grid item>
-              <ProductCard
-                image={image_01}
-                name="AirPods Apple Fones de ouvido"
-                price={1499}
-                alt="Product 1"
-              />
-            </Grid>
-            <Grid item>
-              <ProductCard
-                image={image_01}
-                name="AirPods Apple Fones de ouvido"
-                price={1499}
-                alt="Product 1"
-              />
-            </Grid>
-            <Grid item>
-              <ProductCard
-                image={image_01}
-                name="AirPods Apple Fones de ouvido"
-                price={1499}
-                alt="Product 1"
-              />
-            </Grid>
-            <Grid item>
-              <ProductCard
-                image={image_01}
-                name="AirPods Apple Fones de ouvido"
-                price={1499}
-                alt="Product 1"
-              />
-            </Grid>
-            <Grid item>
-              <ProductCard
-                image={image_01}
-                name="AirPods Apple Fones de ouvido"
-                price={1499}
-                alt="Product 1"
-              />
-            </Grid>
-            <Grid item>
-              <ProductCard
-                image={image_01}
-                name="AirPods Apple Fones de ouvido"
-                price={1499}
-                alt="Product 1"
-              />
-            </Grid>
+            {products.map((product, index) => (
+              <Grid item>
+                <ProductCard
+                  key={index}
+                  image={product.image}
+                  name={product.name}
+                  price={product.price}
+                  alt={product.alt}
+                />
+              </Grid>
+            ))}
           </Grid>
         </Box>
         <TitleComponent title="Dados do Cliente" />
@@ -87,8 +61,31 @@ function App() {
           }}
         >
           <InputComponent label="Nome" placeholder="Nome do cliente aqui" />
-          <InputComponent label="Nome" placeholder="Nome do cliente aqui" />
-          <SelectComponent />
+          <InputComponent label="Email" placeholder="Digite seu email aqui" />
+          <SelectComponent text="Sexo" />
+        </Box>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            alignItems: "flex-end",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Typography
+            variant="h5"
+            sx={{
+              textAlign: "right",
+              width: "100%",
+              fontWeight: "bold",
+              color: "#455a64",
+              marginBottom: "10px",
+            }}
+          >
+            Total: R$ 299,00
+          </Typography>
+          <ButtonWrapper text="Finalizar Compra" />
         </Box>
       </Container>
     </>
