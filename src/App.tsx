@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import {
   ButtonWrapper,
   InputComponent,
@@ -11,11 +9,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { api } from "./service/api";
 import { Typography } from "@mui/material";
+import { useAppSelector } from "./redux/hooks/useAppSelector";
+import { useDispatch } from "react-redux";
 
 function App() {
-  const [products, setProducts] = useState(api.produtos);
+  const products = useAppSelector((state) => state.product);
 
   return (
     <>
@@ -37,10 +36,10 @@ function App() {
               justifyContent: "center",
             }}
           >
-            {products.map((product, index) => (
+            {products.produtos.map((product) => (
               <Grid item>
                 <ProductCard
-                  key={index}
+                  key={product.id}
                   image={product.image}
                   name={product.name}
                   price={product.price}

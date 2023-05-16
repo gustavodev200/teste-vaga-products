@@ -1,9 +1,21 @@
+import React from "react";
+
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { formatCurrency } from "../helpers";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { FiPlus } from "react-icons/fi";
+import { GrFormSubtract } from "react-icons/gr";
+import { useDispatch } from "react-redux";
+import {
+  addAmount,
+  removeAmount,
+  totalPrice,
+} from "../redux/reducers/productReducer";
+import { useAppSelector } from "../redux/hooks/useAppSelector";
 
 interface ProductCardProps {
   name: string;
@@ -13,6 +25,17 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ image, name, price, alt }: ProductCardProps) => {
+  const products = useAppSelector((state) => state.product);
+  const dispatch = useDispatch();
+  const [index, setIndex] = React.useState(0);
+  const [quantity, setQuantity] = React.useState(
+    products.produtos[index].amount
+  );
+
+  const handleOnChangeInput = (index: number) => {
+    dispatch(addAmount(index));
+  };
+
   return (
     <Card
       sx={{
@@ -68,6 +91,59 @@ export const ProductCard = ({ image, name, price, alt }: ProductCardProps) => {
         <Typography variant="body2" color="text.secondary">
           R$ 1.349 à vista(10% de desconto)
         </Typography>
+        <Box
+          component="div"
+          sx={{
+            width: "100%",
+            display: "flex",
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            variant="contained"
+            sx={{
+              width: "30px",
+              height: "50px",
+              borderRadius: "50%",
+              background: "#849da8",
+              ":hover": {
+                background: "#c5e0ec",
+              },
+            }}
+            onClick={() => {
+              dispatch(removeAmount(index)); // Dispatch para ação removeAmount
+              handleOnChangeInput(index); // Chamar a função handleOnChangeInput para atualizar o valor do input
+            }}
+          >
+            <GrFormSubtract />
+          </Button>
+          <Box
+            component={"input"}
+            sx={{ width: "120px" }}
+            type="number"
+            value={quantity}
+          />
+          <Button
+            variant="contained"
+            sx={{
+              width: "30px",
+              height: "50px",
+              borderRadius: "50%",
+              background: "#849da8",
+              ":hover": {
+                background: "#c5e0ec",
+              },
+            }}
+            onClick={() => {
+              dispatch(addAmount(index)); // Dispatch para ação addAmount
+              handleOnChangeInput(index); // Chamar a função handleOnChangeInput para atualizar o valor do input
+            }}
+          >
+            <FiPlus />
+          </Button>
+        </Box>
       </CardContent>
     </Card>
   );
