@@ -77,18 +77,28 @@ export const slice = createSlice({
         total: 0,
       },
     ],
+    totalValue: 0,
   },
   reducers: {
     addAmount: (state, action) => {
-      state.produtos[action.payload].amount += 1;
+      const productId = action.payload;
+      const produto = state.produtos.find((produto) => produto.id === productId);
+      if (produto) {
+        produto.amount += 1;
+      }
     },
     removeAmount: (state, action) => {
-      state.produtos[action.payload].amount -= 1;
+      const productId = action.payload;
+      const produto = state.produtos.find((produto) => produto.id === productId);
+      if (produto && produto.amount > 0) {
+        produto.amount -= 1;
+      }
     },
-    totalPrice: (state, action) => {
-      state.produtos.forEach((produto) => {
-        produto.total = produto.amount * produto.price;
-      });
+    totalPrice: (state) => {
+      const totalAmount = state.produtos.reduce((total, produto) => {
+        return total + produto.amount * produto.price;
+      }, 0);
+      state.totalValue = totalAmount;
     },
   },
 });

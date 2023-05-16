@@ -22,18 +22,31 @@ interface ProductCardProps {
   price: number;
   image: string;
   alt: string;
+  productId: number;
 }
 
-export const ProductCard = ({ image, name, price, alt }: ProductCardProps) => {
-  const products = useAppSelector((state) => state.product);
-  const dispatch = useDispatch();
-  const [index, setIndex] = React.useState(0);
-  const [quantity, setQuantity] = React.useState(
-    products.produtos[index].amount
+export const ProductCard = ({
+  image,
+  name,
+  price,
+  alt,
+  productId,
+}: ProductCardProps) => {
+  const product = useAppSelector((state) =>
+    state.product.produtos.find((produto) => produto.id === productId)
   );
+  const productAmount = product ? product.amount : 0;
 
-  const handleOnChangeInput = (index: number) => {
-    dispatch(addAmount(index));
+  const dispatch = useDispatch();
+
+  const handleAddAmount = () => {
+    dispatch(addAmount(productId));
+    dispatch(totalPrice());
+  };
+
+  const handleRemoveAmount = () => {
+    dispatch(removeAmount(productId));
+    dispatch(totalPrice());
   };
 
   return (
@@ -112,10 +125,7 @@ export const ProductCard = ({ image, name, price, alt }: ProductCardProps) => {
                 background: "#c5e0ec",
               },
             }}
-            onClick={() => {
-              dispatch(removeAmount(index)); // Dispatch para ação removeAmount
-              handleOnChangeInput(index); // Chamar a função handleOnChangeInput para atualizar o valor do input
-            }}
+            onClick={handleRemoveAmount}
           >
             <GrFormSubtract />
           </Button>
@@ -123,8 +133,9 @@ export const ProductCard = ({ image, name, price, alt }: ProductCardProps) => {
             component={"input"}
             sx={{ width: "120px" }}
             type="number"
-            value={quantity}
+            value={productAmount}
           />
+
           <Button
             variant="contained"
             sx={{
@@ -136,10 +147,7 @@ export const ProductCard = ({ image, name, price, alt }: ProductCardProps) => {
                 background: "#c5e0ec",
               },
             }}
-            onClick={() => {
-              dispatch(addAmount(index)); // Dispatch para ação addAmount
-              handleOnChangeInput(index); // Chamar a função handleOnChangeInput para atualizar o valor do input
-            }}
+            onClick={handleAddAmount}
           >
             <FiPlus />
           </Button>
