@@ -109,8 +109,9 @@ export const Products = () => {
             Total: {formatCurrency(totalAmount)}
           </Typography>
 
-          <Link to="/finalize-payment">Finalizar Compra</Link>
-          <ButtonWrapper text="Finalizar Compra" />
+          <Link to="/finalize-payment">
+            <ButtonWrapper text="Finalizar Compra" />
+          </Link>
         </Box>
       </Container>
     </>

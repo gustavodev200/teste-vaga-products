@@ -82,14 +82,18 @@ export const slice = createSlice({
   reducers: {
     addAmount: (state, action) => {
       const productId = action.payload;
-      const produto = state.produtos.find((produto) => produto.id === productId);
+      const produto = state.produtos.find(
+        (produto) => produto.id === productId
+      );
       if (produto) {
         produto.amount += 1;
       }
     },
     removeAmount: (state, action) => {
       const productId = action.payload;
-      const produto = state.produtos.find((produto) => produto.id === productId);
+      const produto = state.produtos.find(
+        (produto) => produto.id === productId
+      );
       if (produto && produto.amount > 0) {
         produto.amount -= 1;
       }

@@ -6,7 +6,6 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { formatCurrency } from "../helpers";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { FiPlus } from "react-icons/fi";
 import { GrFormSubtract } from "react-icons/gr";
 import { useDispatch } from "react-redux";
@@ -16,6 +15,8 @@ import {
   totalPrice,
 } from "../redux/reducers/productReducer";
 import { useAppSelector } from "../redux/hooks/useAppSelector";
+import Fab from "@mui/material/Fab";
+import Button from "@mui/material/Button";
 
 interface ProductCardProps {
   name: string;
@@ -36,6 +37,7 @@ export const ProductCard = ({
     state.product.produtos.find((produto) => produto.id === productId)
   );
   const productAmount = product ? product.amount : 0;
+  const [isHovered, setIsHovered] = React.useState(false);
 
   const dispatch = useDispatch();
 
@@ -49,22 +51,38 @@ export const ProductCard = ({
     dispatch(totalPrice());
   };
 
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
     <Card
       sx={{
-        marginTop: "20px",
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between",
         marginBottom: "20px",
-        maxWidth: 320,
+        minWidth: 310,
+        maxWidth: 310,
         minHeight: 400,
         cursor: "pointer",
         boxShadow: "none",
+        marginTop: "20px",
         transition: "transform 0.3s ease",
         ":hover": {
-          transform: "scale(1.15)",
+          transform: "scale(1.1)",
           boxShadow:
             "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);",
         },
       }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <Box
         component="div"
@@ -79,11 +97,24 @@ export const ProductCard = ({
           component="img"
           image={image}
           alt={alt}
-          sx={{ width: "60%" }}
+          sx={{
+            width: "60%",
+            zIndex: 0,
+          }}
         />
       </Box>
 
-      <CardContent>
+      <CardContent
+        sx={{
+          position: "absolute",
+          top: isHovered ? "60%" : "75%",
+          left: "0",
+          right: "0",
+          transform: "translateY(-50%)",
+          background: "rgba(255, 255, 255, 0.7)",
+          width: "100%",
+        }}
+      >
         <Typography
           variant="h6"
           gutterBottom
@@ -104,54 +135,81 @@ export const ProductCard = ({
         <Typography variant="body2" color="text.secondary">
           R$ 1.349 à vista(10% de desconto)
         </Typography>
-        <Box
-          component="div"
-          sx={{
-            width: "100%",
-            display: "flex",
-            gap: "10px",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Button
-            variant="contained"
-            sx={{
-              width: "30px",
-              height: "50px",
-              borderRadius: "50%",
-              background: "#849da8",
-              ":hover": {
-                background: "#c5e0ec",
-              },
-            }}
-            onClick={handleRemoveAmount}
-          >
-            <GrFormSubtract />
-          </Button>
+        {isHovered && (
           <Box
-            component={"input"}
-            sx={{ width: "120px" }}
-            type="number"
-            value={productAmount}
-          />
-
-          <Button
-            variant="contained"
+            component="div"
             sx={{
-              width: "30px",
-              height: "50px",
-              borderRadius: "50%",
-              background: "#849da8",
-              ":hover": {
-                background: "#c5e0ec",
-              },
+              width: "100%",
+              display: "flex",
+              gap: "10px",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "10px",
+              flexDirection: "column",
             }}
-            onClick={handleAddAmount}
           >
-            <FiPlus />
-          </Button>
-        </Box>
+            <Box
+              component="div"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "20px",
+              }}
+            >
+              <Fab
+                color="primary"
+                sx={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "100%",
+                  background: "#dbe3eb",
+                  ":hover": {
+                    background: "#c5e0ec",
+                  },
+                }}
+                onClick={handleRemoveAmount}
+              >
+                <GrFormSubtract />
+              </Fab>
+              <Box
+                component={"input"}
+                sx={{
+                  width: "120px",
+                  height: "35px",
+                  padding: "0px 10px",
+                  outline: "none",
+                  border: "1px solid #dbe3eb",
+                  borderRadius: "5px",
+                  textAlign: "center",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                }}
+                type="number"
+                value={productAmount}
+              />
+
+              <Fab
+                sx={{
+                  marginBottom: "10px",
+                  width: "40px",
+                  height: "40px",
+                  background: "#dbe3eb",
+                  ":hover": {
+                    background: "#c5e0ec",
+                  },
+                }}
+                onClick={handleAddAmount}
+              >
+                <FiPlus />
+              </Fab>
+            </Box>
+
+            <Button sx={{ width: "80%" }} variant="contained">
+              ADICIONAR
+            </Button>
+          </Box>
+        )}
       </CardContent>
     </Card>
   );
