@@ -58,13 +58,10 @@ export const FinalizePayment = () => {
               marginTop: "-20px",
             }}
           >
-            Sua compra no valor de
-            <Typography
-              variant="subtitle1"
-              sx={{ fontWeight: "bold", color: "#2a7bf5" }}
-            >
+            Sua compra no valor de{" "}
+            <span style={{ fontWeight: "bold", color: "#2a7bf5" }}>
               {formatCurrency(totalAmount)}
-            </Typography>
+            </span>{" "}
             foi realizada com sucesso
           </Typography>
           <img

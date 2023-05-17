@@ -43,11 +43,13 @@ export const ProductCard = ({
 
   const handleAddAmount = () => {
     dispatch(addAmount(productId));
-    dispatch(totalPrice());
   };
 
   const handleRemoveAmount = () => {
     dispatch(removeAmount(productId));
+  };
+
+  const handleUpdateTotalValue = () => {
     dispatch(totalPrice());
   };
 
@@ -205,7 +207,11 @@ export const ProductCard = ({
               </Fab>
             </Box>
 
-            <Button sx={{ width: "80%" }} variant="contained">
+            <Button
+              sx={{ width: "80%" }}
+              variant="contained"
+              onClick={handleUpdateTotalValue}
+            >
               ADICIONAR
             </Button>
           </Box>
