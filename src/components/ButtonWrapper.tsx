@@ -15,6 +15,7 @@ export const ButtonWrapper: React.FC<ButtonWrapperProps> = ({ text }) => {
         ":hover": { backgroundColor: "#ffc46c" },
       }}
       variant="contained"
+      type="submit"
     >
       {text.toUpperCase()}
     </Button>

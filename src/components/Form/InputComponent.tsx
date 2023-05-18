@@ -1,5 +1,6 @@
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import { FormHelperText } from "@mui/material";
 
 interface InputProps {
   label: string;
@@ -17,12 +18,12 @@ export const InputComponent: React.FC<InputProps> = ({
     <Box component="div" sx={{ width: "100%" }}>
       <TextField
         sx={{ width: "100%" }}
-        id="outlined-basic"
         label={label}
         variant="outlined"
         placeholder={placeholder}
         onChange={onChange}
         value={value}
+        required
       />
     </Box>
   );

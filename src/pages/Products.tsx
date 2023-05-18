@@ -15,11 +15,13 @@ import { useDispatch } from "react-redux";
 import { setEmail, setName } from "../redux/reducers/userReducer";
 import { formatCurrency } from "../helpers/formatCurrency";
 import { Link } from "react-router-dom";
+import FormComponent from "../components/Form/FormComponent";
 
 export const Products = () => {
   const user = useAppSelector((state) => state.user);
   const products = useAppSelector((state) => state.product);
   const totalAmount = useAppSelector((state) => state.product.totalValue);
+
   const dispatch = useDispatch();
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +30,10 @@ export const Products = () => {
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setEmail(e.target.value));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(e.target);
   };
 
   return (
@@ -63,7 +69,9 @@ export const Products = () => {
             ))}
           </Grid>
         </Box>
-        <TitleComponent title="Dados do Cliente" />
+        <FormComponent onSubmit={handleSubmit} />
+
+        {/* <TitleComponent title="Dados do Cliente" />
         <Box
           component={"form"}
           sx={{
@@ -112,7 +120,7 @@ export const Products = () => {
           <Link to="/finalize-payment">
             <ButtonWrapper text="Finalizar Compra" />
           </Link>
-        </Box>
+        </Box> */}
       </Container>
     </>
   );

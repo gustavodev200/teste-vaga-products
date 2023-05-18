@@ -25,7 +25,7 @@ export const FinalizePayment = () => {
         <Box
           component={"div"}
           sx={{
-            minWidth: "320px",
+            maxWidth: "310px",
             height: "450px",
             background: "#fff",
             display: "flex",

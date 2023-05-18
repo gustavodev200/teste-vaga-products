@@ -17,6 +17,7 @@ import {
 import { useAppSelector } from "../redux/hooks/useAppSelector";
 import Fab from "@mui/material/Fab";
 import Button from "@mui/material/Button";
+import { IconButton } from "@mui/material";
 
 interface ProductCardProps {
   name: string;
@@ -159,7 +160,7 @@ export const ProductCard = ({
                 gap: "20px",
               }}
             >
-              <Fab
+              <IconButton
                 color="primary"
                 sx={{
                   width: "40px",
@@ -173,7 +174,7 @@ export const ProductCard = ({
                 onClick={handleRemoveAmount}
               >
                 <GrFormSubtract />
-              </Fab>
+              </IconButton>
               <Box
                 component={"input"}
                 sx={{
@@ -191,7 +192,7 @@ export const ProductCard = ({
                 value={productAmount}
               />
 
-              <Fab
+              <IconButton
                 sx={{
                   marginBottom: "10px",
                   width: "40px",
@@ -204,11 +205,12 @@ export const ProductCard = ({
                 onClick={handleAddAmount}
               >
                 <FiPlus />
-              </Fab>
+              </IconButton>
             </Box>
 
             <Button
-              sx={{ width: "80%" }}
+              disableElevation
+              sx={{ width: "80%", background: "#4a9ff3" }}
               variant="contained"
               onClick={handleUpdateTotalValue}
             >
