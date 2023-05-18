@@ -104,8 +104,12 @@ export const slice = createSlice({
       }, 0);
       state.totalValue = totalAmount;
     },
+    resetTotalPrice: (state) => {
+      state.totalValue = 0;
+    },
   },
 });
 
-export const { addAmount, removeAmount, totalPrice } = slice.actions;
+export const { addAmount, removeAmount, totalPrice, resetTotalPrice } =
+  slice.actions;
 export default slice.reducer;

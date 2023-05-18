@@ -1,13 +1,24 @@
 import { formatCurrency } from "../helpers";
 import { useAppSelector } from "../redux/hooks/useAppSelector";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 import { ButtonWrapper } from "../components";
+import { resetTotalPrice } from "../redux/reducers/productReducer";
+import { useDispatch } from "react-redux";
 
 export const FinalizePayment = () => {
   const totalAmount = useAppSelector((state) => state.product.totalValue);
   const user = useAppSelector((state) => state.user);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleReturnProducts = () => {
+    dispatch(resetTotalPrice());
+    navigate("/"); // Rota de redirecionamento após a finalização do pagamento
+  };
+
   return (
     <>
       <Box
@@ -69,7 +80,11 @@ export const FinalizePayment = () => {
             loading="lazy"
             width={"60%"}
           />
-          <Link to="/" style={{ textDecoration: "none", marginTop: "20px" }}>
+          <Link
+            to="/"
+            onClick={handleReturnProducts}
+            style={{ textDecoration: "none", marginTop: "20px" }}
+          >
             <ButtonWrapper text="INICIAR NOVA COMPRA" />
           </Link>
         </Box>

@@ -15,9 +15,8 @@ import {
   totalPrice,
 } from "../redux/reducers/productReducer";
 import { useAppSelector } from "../redux/hooks/useAppSelector";
-import Fab from "@mui/material/Fab";
 import Button from "@mui/material/Button";
-import { IconButton, useMediaQuery, useTheme } from "@mui/material";
+import { IconButton, TextField, useMediaQuery, useTheme } from "@mui/material";
 
 interface ProductCardProps {
   name: string;
@@ -190,18 +189,11 @@ export const ProductCard = ({
               >
                 <GrFormSubtract />
               </IconButton>
-              <Box
-                component={"input"}
+              <TextField
                 sx={{
-                  width: "120px",
-                  height: "35px",
-                  padding: "0px 10px",
-                  outline: "none",
-                  border: "1px solid #dbe3eb",
-                  borderRadius: "5px",
-                  textAlign: "center",
-                  fontSize: "20px",
-                  fontWeight: "bold",
+                  input: {
+                    textAlign: "center",
+                  },
                 }}
                 type="number"
                 value={productAmount}

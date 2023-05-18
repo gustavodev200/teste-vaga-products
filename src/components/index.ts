@@ -1,13 +1,6 @@
 import { ProductCard } from "./ProductCard";
 import { TitleComponent } from "./TitleComponent";
-import { InputComponent } from "./Form/InputComponent";
-import { SelectComponent } from "./Form/SelectComponent";
 import { ButtonWrapper } from "./ButtonWrapper";
+import { FormComponent } from "./Form/FormComponent";
 
-export {
-  ProductCard,
-  TitleComponent,
-  InputComponent,
-  SelectComponent,
-  ButtonWrapper,
-};
+export { ProductCard, TitleComponent, ButtonWrapper, FormComponent };
