@@ -15,7 +15,6 @@ import { useDispatch } from "react-redux";
 import { setEmail, setName } from "../redux/reducers/userReducer";
 import { formatCurrency } from "../helpers/formatCurrency";
 import { Link } from "react-router-dom";
-import FormComponent from "../components/Form/FormComponent";
 
 export const Products = () => {
   const user = useAppSelector((state) => state.user);
@@ -69,9 +68,8 @@ export const Products = () => {
             ))}
           </Grid>
         </Box>
-        <FormComponent onSubmit={handleSubmit} />
 
-        {/* <TitleComponent title="Dados do Cliente" />
+        <TitleComponent title="Dados do Cliente" />
         <Box
           component={"form"}
           sx={{
@@ -120,7 +118,7 @@ export const Products = () => {
           <Link to="/finalize-payment">
             <ButtonWrapper text="Finalizar Compra" />
           </Link>
-        </Box> */}
+        </Box>
       </Container>
     </>
   );

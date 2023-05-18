@@ -17,7 +17,7 @@ import {
 import { useAppSelector } from "../redux/hooks/useAppSelector";
 import Fab from "@mui/material/Fab";
 import Button from "@mui/material/Button";
-import { IconButton } from "@mui/material";
+import { IconButton, useMediaQuery, useTheme } from "@mui/material";
 
 interface ProductCardProps {
   name: string;
@@ -39,27 +39,41 @@ export const ProductCard = ({
   );
   const productAmount = product ? product.amount : 0;
   const [isHovered, setIsHovered] = React.useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const dispatch = useDispatch();
 
-  const handleAddAmount = () => {
+  const handleAddAmount = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     dispatch(addAmount(productId));
   };
 
-  const handleRemoveAmount = () => {
+  const handleRemoveAmount = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+
     dispatch(removeAmount(productId));
   };
 
-  const handleUpdateTotalValue = () => {
+  const handleUpdateTotalValue = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     dispatch(totalPrice());
   };
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
+    if (!isMobile) {
+      setIsHovered(true);
+    }
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
+  };
+
+  const handleOnClickMobile = () => {
+    if (isMobile) {
+      setIsHovered((value) => !value);
+    }
   };
 
   return (
@@ -86,6 +100,7 @@ export const ProductCard = ({
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleOnClickMobile}
     >
       <Box
         component="div"
